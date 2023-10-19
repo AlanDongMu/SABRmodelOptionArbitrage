@@ -36,15 +36,31 @@ def get_static_metric(return_list):
 
 
 def get_metric(portfolio):
-    get_static_metric(portfolio['return'])
+    return_std, return_mean, return_median = get_static_metric(portfolio['return'])
     win_rate = get_win_rate(portfolio['return'])
-    print('胜率: ', win_rate)
     max_drawdown = get_max_drawdown(portfolio['cumulate_return'])
-    print('累计收益最大回撤率: ', max_drawdown*100, '%')
+    with open(r'metric_result/static_result.txt', 'w') as f:
+        print('收益标准差: ', return_std, file=f)
+        print('收益均值: ', return_mean, file=f)
+        print('收益中位数: ', return_median, file=f)
+        print('胜率: ', win_rate, file=f)
+        print('累计收益最大回撤率: ', max_drawdown*100, '%', file=f)
 
-    plt.plot(portfolio['value'], label='单次套利组合持仓价值')
-    plt.show()
-    plt.plot(portfolio['return'], label='单次套利收益')
-    plt.show()
-    plt.plot(portfolio['cumulate_return'], label='累计套利收益')
-    plt.show()
+    x = portfolio.index
+
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.figure(1)
+    plt.plot(x, portfolio['value'], label='单次套利组合持仓价值')
+    plt.legend(loc="lower right")
+    plt.savefig(r'metric_result/单次套利组合持仓价值.png')
+
+    plt.figure(2)
+    plt.plot(x, portfolio['return'], label='单次套利收益')
+    plt.legend(loc="lower right")
+    plt.savefig(r'metric_result/单次套利收益.png')
+
+    plt.figure(3)
+    plt.plot(x, portfolio['cumulate_return'], label='累计套利收益')
+    plt.legend(loc="lower right")
+    plt.savefig(r'metric_result/累计套利收益.png')
+

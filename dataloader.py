@@ -35,7 +35,7 @@ def get_data(stock_file, option_file):
         contract_data['CorP'] = 1 if call_put == "C" else 0
 
         data = pd.concat([data, contract_data], axis=0)
-        #print(contract_name)
+
         if i % 50 == 0:
             print("Contracts collected: ", i, "/", str(int(contract_num)))
     data = data.sort_index()
@@ -45,13 +45,4 @@ def get_data(stock_file, option_file):
 if __name__ == '__main__':
     stock_file = r"data\raw_data\stock_30min.csv"
     option_file = r"data\raw_data\option_30min.csv"
-    '''
-    train_start = dt.datetime.strptime("2021-05-01 10:00:00", "%Y-%m-%d %H:%M:%S")
-    train_end = dt.datetime.strptime("2021-05-31 10:00:00", "%Y-%m-%d %H:%M:%S")
-
-    train_start = dt.datetime.strptime(train_date_start, "%Y-%m-%d %H:%M:%S")
-    train_end = dt.datetime.strptime(train_date_start, "%Y-%m-%d %H:%M:%S")
-    test_start = dt.datetime.strptime(test_date_start, "%Y-%m-%d %H:%M:%S")
-    test_end = dt.datetime.strptime(test_date_end, "%Y-%m-%d %H:%M:%S")
-    '''
     get_data(stock_file, option_file)

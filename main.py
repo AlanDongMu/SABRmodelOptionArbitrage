@@ -6,7 +6,7 @@ from strategy import get_position, back_test
 
 
 def main():
-    data_file = r'data/data.csv'
+    data_file = r'data/data_demo.csv'
     data = pd.read_csv(data_file)
     data['time'] = pd.to_datetime(data['time'])
     data['date'] = data['time'].dt.date
@@ -37,4 +37,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    portfolio= pd.read_csv(r'data/portfolio.csv')
+    print(portfolio)
+    get_metric(portfolio)
+
